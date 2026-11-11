@@ -265,6 +265,34 @@ def ensure_canonical_field_artifacts(
     _write_text(base / "logs" / "pipeline_runs.jsonl", "", overwrite=False)
 
 
+def _farm_state_from_boundary(grower_slug: str, farm_slug: str) -> str:
+    """Return the state code carried by the farm boundary, or an empty string.
+
+    Farm metadata used to hardcode ``IA``, which mislabelled every non-Iowa
+    farm. The boundary features are the authority (``state`` property).
+    """
+    boundary = (
+        GROWERS_ROOT
+        / grower_slug
+        / "farms"
+        / farm_slug
+        / "boundary"
+        / "field_boundaries.geojson"
+    )
+    try:
+        payload = json.loads(boundary.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return ""
+    for feature in payload.get("features", []):
+        properties = feature.get("properties")
+        if not isinstance(properties, dict):
+            continue
+        state = str(properties.get("state") or "").strip().upper()
+        if state:
+            return state
+    return ""
+
+
 def ensure_canonical_data_tree(
     grower_slug: str = DEFAULT_GROWER,
     farm_slug: str = DEFAULT_FARM,
@@ -412,7 +440,7 @@ def ensure_canonical_data_tree(
             "grower_slug": grower_slug,
             "farm_slug": farm_slug,
             "display_name": farm_name,
-            "state": "IA",
+            "state": _farm_state_from_boundary(grower_slug, farm_slug),
             "country": "US",
             "default_crs": "EPSG:4326",
             "notes": "Canonical farm metadata",

@@ -401,7 +401,10 @@ def _compute_derivatives(
     if not np.any(valid_mask):
         return {name.removesuffix(".tif"): empty.copy() for name in DERIVED_RASTER_FILENAMES}
 
-    dz_drow, dz_dx = np.gradient(dem.astype("float64"), y_resolution, x_resolution)
+    # Compute in the DEM's own float32 precision. The products are written as
+    # float32 and a 1 m field clip is ~8M cells, so promoting to float64 here
+    # doubled peak RSS and got the process OOM-killed on memory-tight hosts.
+    dz_drow, dz_dx = np.gradient(dem, y_resolution, x_resolution)
     dz_dy = -dz_drow
     gradient_magnitude = np.sqrt(dz_dx**2 + dz_dy**2)
     slope_radians = np.arctan(gradient_magnitude)
@@ -451,7 +454,7 @@ def _hillshade(dz_dx: np.ndarray, dz_dy: np.ndarray, slope_radians: np.ndarray) 
 
 
 def _curvatures(dem: np.ndarray, x_resolution: float, y_resolution: float) -> tuple[np.ndarray, np.ndarray]:
-    dz_drow, dz_dx = np.gradient(dem.astype("float64"), y_resolution, x_resolution)
+    dz_drow, dz_dx = np.gradient(dem, y_resolution, x_resolution)
     dz_dy = -dz_drow
     _, zxx = np.gradient(dz_dx, y_resolution, x_resolution)
     zyy_row, _ = np.gradient(dz_dy, y_resolution, x_resolution)
@@ -469,24 +472,32 @@ def _curvatures(dem: np.ndarray, x_resolution: float, y_resolution: float) -> tu
 
 
 def _position_and_roughness(dem: np.ndarray, valid_mask: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    neighbors = [_shift(dem, row_delta, col_delta, np.nan) for row_delta, col_delta, _, _ in _D8_NEIGHBORS]
-    neighbor_valid = [
-        _shift(valid_mask.astype("float32"), row_delta, col_delta, 0.0) > 0.5
-        for row_delta, col_delta, _, _ in _D8_NEIGHBORS
-    ]
-    stack = np.stack(neighbors)
-    valid_stack = np.stack(neighbor_valid)
-    finite_stack = np.isfinite(stack) & valid_stack & np.expand_dims(valid_mask, axis=0)
-    counts = np.count_nonzero(finite_stack, axis=0)
-    sums = np.nansum(np.where(finite_stack, stack, np.nan), axis=0)
-    mean = np.divide(sums, counts, out=np.full(dem.shape, np.nan), where=counts > 0)
+    # Accumulate the eight D8 neighbours one offset at a time. Stacking them
+    # (8 x cells) plus the finite mask, the np.where copies and the squared
+    # differences pushed peak RSS past 2.5 GB on a 1 m ~2.4k x 3.4k field clip
+    # and got the process OOM-killed; running sums give the same result with
+    # one neighbour's worth of memory.
+    counts = np.zeros(dem.shape, dtype="uint8")
+    sums = np.zeros(dem.shape, dtype="float32")
+    squared_differences = np.zeros(dem.shape, dtype="float32")
+    for row_delta, col_delta, _, _ in _D8_NEIGHBORS:
+        neighbour = _shift(dem, row_delta, col_delta, np.nan)
+        neighbour_valid = (
+            _shift(valid_mask.astype("float32"), row_delta, col_delta, 0.0) > 0.5
+        )
+        finite = np.isfinite(neighbour) & neighbour_valid & valid_mask
+        counts += finite.view(np.uint8)
+        sums += np.where(finite, neighbour, 0.0)
+        difference = np.where(finite, neighbour - dem, 0.0)
+        squared_differences += difference * difference
+        del neighbour, neighbour_valid, finite, difference
+    mean = np.divide(sums, counts, out=np.full(dem.shape, np.nan, dtype="float32"), where=counts > 0)
     tpi = dem - mean
-    differences = np.where(finite_stack, stack - dem, np.nan)
     tri = np.sqrt(
         np.divide(
-            np.nansum(differences**2, axis=0),
+            squared_differences,
             counts,
-            out=np.zeros(dem.shape, dtype="float64"),
+            out=np.zeros(dem.shape, dtype="float32"),
             where=counts > 0,
         )
     )
