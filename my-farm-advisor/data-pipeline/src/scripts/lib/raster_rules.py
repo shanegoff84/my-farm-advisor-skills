@@ -107,7 +107,7 @@ def coverage(tif_path: str | Path, geom_wgs84, *, nodata_extra: float | None = N
         field_cells = int(in_field.sum())
         field_valid = int((in_field & valid).sum())
         # margin actually present: field bounds vs raster bounds, in metres
-        gb = gpd.GeoSeries([geom]).bounds.iloc[0]
+        gb = gpd.GeoSeries([geom]).total_bounds
         m_lat = (ds.bounds.top - gb[3]) if ds.bounds.top > gb[3] else 0.0
         m_lon = (gb[2] - ds.bounds.left) if ds.bounds.left < gb[2] else 0.0
         if ds.crs.is_geographic:

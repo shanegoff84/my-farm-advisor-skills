@@ -47,6 +47,78 @@ URL = "https://data.source.coop/fiboa/us-usda-cropland/us_usda_cropland.parquet"
 # Physical leaf columns for the bbox struct (verified against live stats 2026-11-03)
 LEAF = {"bbox.xmin": 7, "bbox.ymin": 8, "bbox.xmax": 9, "bbox.ymax": 10}
 
+_STATE_FIPS: dict[str, str] | None = None
+_COUNTY_FIPS: dict[tuple[str, str], str] | None = None
+_WARNED_STATES: set[str] = set()
+
+
+def _state_fips_lookup() -> dict[str, str]:
+    """Map USPS state code -> two-digit FIPS from the shared geoadmin states."""
+    global _STATE_FIPS
+    if _STATE_FIPS is not None:
+        return _STATE_FIPS
+    mapping: dict[str, str] = {}
+    try:
+        from paths import shared_geoadmin_states_dir  # noqa: PLC0415
+
+        path = shared_geoadmin_states_dir() / "states_usa.geojson"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        for feature in payload.get("features", []):
+            props = feature.get("properties") or {}
+            code = str(props.get("state_code") or "").strip().upper()
+            fips = str(props.get("state_fips") or "").strip().zfill(2)
+            if code and fips:
+                mapping[code] = fips
+    except Exception as exc:  # pragma: no cover - defensive
+        print(f"  warning: could not read geoadmin states for state_fips ({exc})")
+    _STATE_FIPS = mapping
+    return mapping
+
+
+def _county_fips_lookup() -> dict[tuple[str, str], str]:
+    """Map (state_fips, county name) -> three-digit county FIPS."""
+    global _COUNTY_FIPS
+    if _COUNTY_FIPS is not None:
+        return _COUNTY_FIPS
+    mapping: dict[tuple[str, str], str] = {}
+    try:
+        from paths import shared_geoadmin_counties_dir  # noqa: PLC0415
+
+        path = shared_geoadmin_counties_dir() / "counties_usa.geojson"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        for feature in payload.get("features", []):
+            props = feature.get("properties") or {}
+            state_fips = str(props.get("state_fips") or "").strip().zfill(2)
+            county_fips = str(props.get("county_fips") or "").strip().zfill(3)
+            name = str(props.get("county_name") or "").strip().lower()
+            if state_fips and county_fips and name:
+                mapping[(state_fips, name)] = county_fips
+    except Exception as exc:  # pragma: no cover - defensive
+        print(f"  warning: could not read geoadmin counties for county_fips ({exc})")
+    _COUNTY_FIPS = mapping
+    return mapping
+
+
+def resolve_fips(state: str, county: str) -> tuple[str, str]:
+    """Resolve ``state_fips``/``county_fips`` for a CSB field.
+
+    The pipeline's CDL step routes on the boundary ``state_fips`` property, so
+    omitting it silently sends a farm to the wrong state raster. Derive the FIPS
+    codes from the canonical geoadmin lookups instead of leaving them blank.
+    """
+    state_code = (state or "").strip().upper()
+    state_fips = _state_fips_lookup().get(state_code, "")
+    if not state_fips and state_code and state_code not in _WARNED_STATES:
+        _WARNED_STATES.add(state_code)
+        print(f"  warning: no state FIPS found for state={state!r}; boundaries will omit state_fips")
+    county_fips = ""
+    if state_fips and county:
+        county_fips = _county_fips_lookup().get((state_fips, county.strip().lower()), "")
+        if not county_fips and county.strip() not in _WARNED_STATES:
+            _WARNED_STATES.add(county.strip())
+            print(f"  warning: no county FIPS found for {county!r} in state {state_code}")
+    return state_fips, county_fips
+
 
 def file_crs(pf: pq.ParquetFile) -> CRS:
     kv = {
@@ -127,6 +199,7 @@ def main(argv: list[str] | None = None) -> int:
     farm_bounds = farm_dir / "boundary" / "field_boundaries.geojson"
     for i, (fid, crop, county, ha, poly) in enumerate(rows):
         slug = f"{args.field_prefix}{i + 1}"
+        state_fips, county_fips = resolve_fips(args.state, county)
         fdir = farm_dir / "fields" / slug
         (fdir / "boundary").mkdir(parents=True, exist_ok=True)
         gdf = gpd.GeoDataFrame(
@@ -135,6 +208,8 @@ def main(argv: list[str] | None = None) -> int:
                     "field_id": slug,
                     "country": args.country,
                     "state": args.state,
+                    "state_fips": state_fips,
+                    "county_fips": county_fips,
                     "year": args.year,
                     "area_ha_est": round(ha, 1),
                     "crop": crop,
@@ -176,6 +251,8 @@ def main(argv: list[str] | None = None) -> int:
         "row_groups_read": len(sel),
         "total_row_groups": pf.metadata.num_row_groups,
         "min_area_ha": args.min_area_ha,
+        "country": args.country,
+        "state": args.state,
         "accessed_at": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
         "fields": [r["field_id"] for r in inv_rows],
     }

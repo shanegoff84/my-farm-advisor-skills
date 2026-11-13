@@ -188,14 +188,49 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def _state_fips_from_geometry(fields: gpd.GeoDataFrame) -> list[str]:
+    """Derive state FIPS by intersecting fields with the shared state polygons."""
+    try:
+        from paths import shared_geoadmin_states_dir  # noqa: PLC0415
+
+        states_path = shared_geoadmin_states_dir() / "states_usa.geojson"
+        if not states_path.exists():
+            return []
+        states = gpd.read_file(states_path)[["state_fips", "geometry"]]
+        frame = fields.to_crs("EPSG:4326")[["geometry"]] if fields.crs else fields[["geometry"]]
+        joined = gpd.sjoin(frame, states, predicate="intersects", how="inner")
+        return sorted(
+            {
+                str(value).strip().zfill(2)
+                for value in joined["state_fips"]
+                if str(value).strip()
+            }
+        )
+    except Exception as exc:  # pragma: no cover - defensive
+        print(f"  warning: could not derive state FIPS from geometry ({exc})")
+        return []
+
+
 def _state_fips_values(fields: gpd.GeoDataFrame) -> list[str]:
-    if "state_fips" not in fields.columns:
-        return ["19"]
-    values = (
-        pd.Series(fields["state_fips"], dtype="object").fillna("").astype(str).str.strip().tolist()
-    )
+    if fields.empty:
+        return []
+    values: list[str] = []
+    if "state_fips" in fields.columns:
+        values = [
+            str(value).strip()
+            for value in fields["state_fips"].fillna("").astype(str).tolist()
+        ]
     unique_values = sorted({value.zfill(2) for value in values if value})
-    return unique_values or ["19"]
+    if unique_values:
+        return unique_values
+    derived = _state_fips_from_geometry(fields)
+    if derived:
+        print(f"  Derived state FIPS from field geometry: {', '.join(derived)}")
+        return derived
+    raise ValueError(
+        "Cannot resolve state_fips for US fields. Add a state_fips property to the "
+        "field boundaries or install the shared geoadmin states."
+    )
 
 
 def _table_field_ids(csv_path: Path) -> set[str]:
@@ -259,7 +294,9 @@ def main():
     if not us_fields.empty:
         print("State CDL coverage:", ", ".join(state_fips_values))
 
-    target_years = _target_cdl_years()
+    target_years = _target_cdl_years(
+        latest_year=int(os.environ.get("AG_CDL_LATEST_YEAR", DEFAULT_CDL_LATEST_YEAR))
+    )
     cached_years = [
         year
         for year in target_years
