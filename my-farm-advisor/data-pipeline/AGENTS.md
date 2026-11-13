@@ -10,7 +10,7 @@ Edits should stay in this folder and its children unless the user explicitly ask
 
 ## Read nearby docs first
 
-Read `README.md` first. Review `scripts/install.sh`, `src/scripts/bootstrap_runtime.py`, and `src/scripts/run_farm_pipeline.py` before changing runtime or pipeline behavior. Read `../data-sources/INDEX.md` for related rebuild and reporting workflows.
+Read `README.md` first. Review `scripts/install.sh`, `src/scripts/bootstrap_runtime.py`, and `src/scripts/run_farm_pipeline.py` before changing runtime or pipeline behavior. Read `../data-sources/INDEX.md` for related rebuild and reporting workflows. For grower-level interactive web maps, read `web-map/GUIDE.md`.
 
 ## Runtime contract
 
@@ -192,6 +192,7 @@ cd ../..
 - Upgrade data seeding uses `rsync -r --no-times --checksum` and must not delete existing files.
 - Keep `src/` shaped like the canonical runtime tree with `growers/`, `shared/`, and `scripts/`.
 - Farm weather defaults are `AG_WEATHER_BACKEND=zarr`, `AG_WEATHER_START_YEAR=2021`, `AG_WEATHER_END_YEAR=2025`, and `AG_WEATHER_TIME_STANDARD=lst`. Use CLI arguments first, or set those environment variables for runtime scripts that do not accept CLI arguments directly.
+- Farm CDL history defaults to `DEFAULT_CDL_LATEST_YEAR` (2023, the public-data cut-off). Set `AG_CDL_LATEST_YEAR=2025` when crop history must match the 2021-2025 imagery and weather window. `download_cdl.py` resolves state FIPS from the boundary `state_fips` property, falling back to a geoadmin geometry join, and fails loudly when neither is available.
 - Do not commit `.env` files for data-pipeline defaults. Persist only `DATA_PIPELINE_DATA_ROOT` through the documented `environment.d` file; weather controls should remain explicit CLI arguments or current-shell exports.
 
 ## Local validation
