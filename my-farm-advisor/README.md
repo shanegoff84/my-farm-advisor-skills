@@ -281,6 +281,13 @@ The umbrella entrypoint is [`SKILL.md`](SKILL.md). From there, the skill routes 
 | Strategy         | Crop strategy and maturity planning workflows                          | [`strategy/INDEX.md`](strategy/INDEX.md)                 |
 | Weather          | NASA POWER weather ingestion and downstream weather analysis           | [`weather/INDEX.md`](weather/INDEX.md)                   |
 
+**Field-level EDA comparison (Assignment 2).**
+[`eda/eda-field-comparison/`](eda/eda-field-comparison/GUIDE.md) is a runnable
+multi-grower comparison of field boundaries, CDL/cropland history and weather at
+within-field, within-grower and cross-grower scales. A default run writes nine
+figures and five tables; the assembled write-up with embedded figures is
+[`REPORT.md`](eda/eda-field-comparison/REPORT.md).
+
 ## Typical Workflow
 
 ```mermaid
