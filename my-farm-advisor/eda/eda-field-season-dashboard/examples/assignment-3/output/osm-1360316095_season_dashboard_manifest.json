@@ -1,0 +1,826 @@
+{
+  "skill": "eda-field-season-dashboard",
+  "generated_at": "2026-11-25T20:09:37+00:00",
+  "data_root": "/home/coder/my-farm-advisor-runtime",
+  "pipeline": "/home/coder/my-farm-advisor-runtime/data-pipeline",
+  "field": {
+    "field_id": "osm-1360316095",
+    "grower": "ia-demo-grower",
+    "farm": "iowa-demo-farm",
+    "county": "Kossuth",
+    "state_fips": "19",
+    "area_acres": 154.94971536757984,
+    "boundary": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/boundary/field_boundaries.geojson",
+    "weather": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/weather/daily_weather.csv"
+  },
+  "years": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "runs": [
+    {
+      "field_id": "osm-1360316095",
+      "grower": "ia-demo-grower",
+      "farm": "iowa-demo-farm",
+      "county": "Kossuth",
+      "state_fips": "19",
+      "area_acres": 154.94971536757984,
+      "year": 2021,
+      "crop": {
+        "crop_name": "Corn",
+        "crop_code": 1,
+        "pct": 96.53,
+        "pixel_count": 695,
+        "crop_source": "cdl",
+        "table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2021_cdl.csv",
+        "alternatives": [
+          {
+            "crop_name": "Corn",
+            "pct": 96.53
+          }
+        ]
+      },
+      "weather": {
+        "season_start": "2021-04-01",
+        "season_end": "2021-10-31",
+        "days_present": 214,
+        "days_expected": 214,
+        "missing_days": 0,
+        "precip_total_mm": 541.9,
+        "gdd_total_c_day": 1900.0,
+        "hot_days": 35,
+        "extreme_heat_days": 8,
+        "heavy_rain_days": 3,
+        "frost_days": 12,
+        "hottest": {
+          "date": "2021-07-27",
+          "value": 37.460022
+        },
+        "coldest": {
+          "date": "2021-04-01",
+          "value": -5.960022
+        },
+        "wettest": {
+          "date": "2021-08-27",
+          "value": 47.340027
+        },
+        "monthly_precip_mm": {
+          "Apr": 31.1,
+          "May": 83.2,
+          "Jun": 47.5,
+          "Jul": 78.9,
+          "Aug": 149.5,
+          "Sep": 68.9,
+          "Oct": 82.9
+        }
+      },
+      "ndvi": {
+        "usable_in_season": 6,
+        "in_season_scenes": 6,
+        "largest_gap_days": 40,
+        "largest_gap": {
+          "start": "2021-05-04",
+          "end": "2021-06-13",
+          "days": 40
+        },
+        "observations": [
+          {
+            "date": "2021-04-29",
+            "ndvi_mean": 0.208,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2021-05-04",
+            "ndvi_mean": 0.239,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2021-06-13",
+            "ndvi_mean": 0.553,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2021-07-23",
+            "ndvi_mean": 0.833,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2021-08-12",
+            "ndvi_mean": 0.805,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2021-09-16",
+            "ndvi_mean": 0.549,
+            "valid_fraction": 1.0
+          }
+        ],
+        "skipped": []
+      },
+      "events": [
+        {
+          "key": "heat_peak",
+          "date": "2021-07-27",
+          "label": "peak heat",
+          "short": "heat",
+          "panel": "temperature",
+          "value": 37.460022,
+          "unit": "\u00b0C",
+          "detail": "Tmax 37.5 \u00b0C on 27 Jul"
+        },
+        {
+          "key": "wet_start",
+          "date": "2021-08-27",
+          "label": "heavy rain",
+          "short": "rain",
+          "panel": "precipitation",
+          "value": 47.340027,
+          "unit": "mm",
+          "detail": "47.3 mm on 27 Aug"
+        },
+        {
+          "key": "freeze",
+          "date": "2021-10-23",
+          "label": "freeze",
+          "short": "freeze",
+          "panel": "temperature",
+          "value": -2.2000122,
+          "unit": "\u00b0C",
+          "detail": "Tmin -2.2 \u00b0C on 23 Oct"
+        }
+      ],
+      "captions": [
+        "Green-up: NDVI rose 0.24 \u2192 0.55 between 04 May and 13 Jun, with 78 mm of rain in the interval.",
+        "Midseason: peak NDVI 0.83 on 23 Jul; Tmax reached 37.5 \u00b0C on 27 Jul; 35 days \u226532 \u00b0C; NDVI then fell 0.26 to 0.55 by 16 Sep.",
+        "Finish: first freeze Tmin -2.2 \u00b0C on 23 Oct; GDD 1,900 \u00b0C-day, 2nd-highest of 5 years; NDVI 0.55 at the last scene (16 Sep)."
+      ],
+      "output_png": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2021_corn_season_dashboard.png",
+      "sidecars": {
+        "ndvi_scenes": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2021_ndvi_scenes.csv",
+        "weather_daily": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2021_weather_daily.csv",
+        "events": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2021_events.csv"
+      },
+      "inputs": {
+        "boundary": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/boundary/field_boundaries.geojson",
+        "weather": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/weather/daily_weather.csv",
+        "cdl_table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2021_cdl.csv",
+        "sentinel_dir": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/satellite/sentinel/2021",
+        "gdd_normal_years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      }
+    },
+    {
+      "field_id": "osm-1360316095",
+      "grower": "ia-demo-grower",
+      "farm": "iowa-demo-farm",
+      "county": "Kossuth",
+      "state_fips": "19",
+      "area_acres": 154.94971536757984,
+      "year": 2022,
+      "crop": {
+        "crop_name": "Soybeans",
+        "crop_code": 5,
+        "pct": 96.53,
+        "pixel_count": 695,
+        "crop_source": "cdl",
+        "table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2022_cdl.csv",
+        "alternatives": [
+          {
+            "crop_name": "Soybeans",
+            "pct": 96.53
+          }
+        ]
+      },
+      "weather": {
+        "season_start": "2022-04-01",
+        "season_end": "2022-10-31",
+        "days_present": 214,
+        "days_expected": 214,
+        "missing_days": 0,
+        "precip_total_mm": 477.4,
+        "gdd_total_c_day": 1781.0,
+        "hot_days": 26,
+        "extreme_heat_days": 7,
+        "heavy_rain_days": 2,
+        "frost_days": 25,
+        "hottest": {
+          "date": "2022-08-02",
+          "value": 38.77002
+        },
+        "coldest": {
+          "date": "2022-10-18",
+          "value": -6.630005
+        },
+        "wettest": {
+          "date": "2022-08-06",
+          "value": 44.940002
+        },
+        "monthly_precip_mm": {
+          "Apr": 94.5,
+          "May": 68.8,
+          "Jun": 69.6,
+          "Jul": 89.9,
+          "Aug": 119.0,
+          "Sep": 26.5,
+          "Oct": 9.2
+        }
+      },
+      "ndvi": {
+        "usable_in_season": 6,
+        "in_season_scenes": 7,
+        "largest_gap_days": 75,
+        "largest_gap": {
+          "start": "2022-04-04",
+          "end": "2022-06-18",
+          "days": 75
+        },
+        "observations": [
+          {
+            "date": "2022-04-04",
+            "ndvi_mean": 0.089,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2022-06-18",
+            "ndvi_mean": 0.242,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2022-07-18",
+            "ndvi_mean": 0.666,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2022-08-22",
+            "ndvi_mean": 0.699,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2022-09-11",
+            "ndvi_mean": 0.667,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2022-10-11",
+            "ndvi_mean": 0.13,
+            "valid_fraction": 1.0
+          }
+        ],
+        "skipped": [
+          {
+            "date": "2022-05-14",
+            "scene_dir": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/satellite/sentinel/2022/sentinel_20220514",
+            "reason": "insufficient_valid_pixels",
+            "note": "0/5860 field pixels passed the SCL mask (0% < 30%)"
+          }
+        ]
+      },
+      "events": [
+        {
+          "key": "heat_peak",
+          "date": "2022-08-02",
+          "label": "peak heat",
+          "short": "heat",
+          "panel": "temperature",
+          "value": 38.77002,
+          "unit": "\u00b0C",
+          "detail": "Tmax 38.8 \u00b0C on 02 Aug"
+        },
+        {
+          "key": "wet_start",
+          "date": "2022-08-06",
+          "label": "heavy rain",
+          "short": "rain",
+          "panel": "precipitation",
+          "value": 44.940002,
+          "unit": "mm",
+          "detail": "44.9 mm on 06 Aug"
+        },
+        {
+          "key": "freeze",
+          "date": "2022-10-08",
+          "label": "freeze",
+          "short": "freeze",
+          "panel": "temperature",
+          "value": -0.4199829,
+          "unit": "\u00b0C",
+          "detail": "Tmin -0.4 \u00b0C on 08 Oct"
+        }
+      ],
+      "captions": [
+        "Green-up: NDVI rose 0.24 \u2192 0.67 between 18 Jun and 18 Jul, with 86 mm of rain in the interval.",
+        "Midseason: peak NDVI 0.70 on 22 Aug; Tmax reached 38.8 \u00b0C on 02 Aug; 26 days \u226532 \u00b0C; NDVI then fell 0.54 to 0.13 by 11 Oct.",
+        "Finish: first freeze Tmin -0.4 \u00b0C on 08 Oct; coldest -6.6 \u00b0C on 18 Oct; GDD 1,781 \u00b0C-day, 3rd-highest of 5 years; NDVI 0.13 at the last scene (11 Oct)."
+      ],
+      "output_png": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2022_soybeans_season_dashboard.png",
+      "sidecars": {
+        "ndvi_scenes": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2022_ndvi_scenes.csv",
+        "weather_daily": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2022_weather_daily.csv",
+        "events": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2022_events.csv"
+      },
+      "inputs": {
+        "boundary": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/boundary/field_boundaries.geojson",
+        "weather": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/weather/daily_weather.csv",
+        "cdl_table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2022_cdl.csv",
+        "sentinel_dir": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/satellite/sentinel/2022",
+        "gdd_normal_years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      }
+    },
+    {
+      "field_id": "osm-1360316095",
+      "grower": "ia-demo-grower",
+      "farm": "iowa-demo-farm",
+      "county": "Kossuth",
+      "state_fips": "19",
+      "area_acres": 154.94971536757984,
+      "year": 2023,
+      "crop": {
+        "crop_name": "Corn",
+        "crop_code": 1,
+        "pct": 96.53,
+        "pixel_count": 695,
+        "crop_source": "cdl",
+        "table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2023_cdl.csv",
+        "alternatives": [
+          {
+            "crop_name": "Corn",
+            "pct": 96.53
+          }
+        ]
+      },
+      "weather": {
+        "season_start": "2023-04-01",
+        "season_end": "2023-10-31",
+        "days_present": 214,
+        "days_expected": 214,
+        "missing_days": 0,
+        "precip_total_mm": 526.8,
+        "gdd_total_c_day": 1938.0,
+        "hot_days": 36,
+        "extreme_heat_days": 12,
+        "heavy_rain_days": 6,
+        "frost_days": 19,
+        "hottest": {
+          "date": "2023-08-23",
+          "value": 39.909973
+        },
+        "coldest": {
+          "date": "2023-10-30",
+          "value": -6.0599976
+        },
+        "wettest": {
+          "date": "2023-10-12",
+          "value": 37.609985
+        },
+        "monthly_precip_mm": {
+          "Apr": 53.3,
+          "May": 118.2,
+          "Jun": 75.4,
+          "Jul": 49.2,
+          "Aug": 76.1,
+          "Sep": 49.0,
+          "Oct": 105.7
+        }
+      },
+      "ndvi": {
+        "usable_in_season": 7,
+        "in_season_scenes": 7,
+        "largest_gap_days": 55,
+        "largest_gap": {
+          "start": "2023-05-04",
+          "end": "2023-06-28",
+          "days": 55
+        },
+        "observations": [
+          {
+            "date": "2023-04-24",
+            "ndvi_mean": 0.098,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2023-05-04",
+            "ndvi_mean": 0.104,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2023-06-28",
+            "ndvi_mean": 0.597,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2023-07-18",
+            "ndvi_mean": 0.578,
+            "valid_fraction": 0.99
+          },
+          {
+            "date": "2023-08-22",
+            "ndvi_mean": 0.529,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2023-09-16",
+            "ndvi_mean": 0.305,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2023-10-16",
+            "ndvi_mean": 0.098,
+            "valid_fraction": 1.0
+          }
+        ],
+        "skipped": []
+      },
+      "events": [
+        {
+          "key": "wet_start",
+          "date": "2023-05-13",
+          "label": "heavy rain",
+          "short": "rain",
+          "panel": "precipitation",
+          "value": 32.840027,
+          "unit": "mm",
+          "detail": "32.8 mm on 13 May"
+        },
+        {
+          "key": "heat_peak",
+          "date": "2023-08-23",
+          "label": "peak heat",
+          "short": "heat",
+          "panel": "temperature",
+          "value": 39.909973,
+          "unit": "\u00b0C",
+          "detail": "Tmax 39.9 \u00b0C on 23 Aug"
+        },
+        {
+          "key": "freeze",
+          "date": "2023-10-27",
+          "label": "freeze",
+          "short": "freeze",
+          "panel": "temperature",
+          "value": -3.8499756,
+          "unit": "\u00b0C",
+          "detail": "Tmin -3.8 \u00b0C on 27 Oct"
+        }
+      ],
+      "captions": [
+        "Green-up: NDVI rose 0.10 \u2192 0.60 between 04 May and 28 Jun, with 191 mm of rain in the interval.",
+        "Midseason: peak NDVI 0.60 on 28 Jun; Tmax reached 39.9 \u00b0C on 23 Aug; 36 days \u226532 \u00b0C; NDVI then fell 0.22 to 0.31 by 16 Sep.",
+        "Finish: first freeze Tmin -3.8 \u00b0C on 27 Oct; coldest -6.1 \u00b0C on 30 Oct; GDD 1,938 \u00b0C-day, highest of 5 years; NDVI 0.10 at the last scene (16 Oct)."
+      ],
+      "output_png": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2023_corn_season_dashboard.png",
+      "sidecars": {
+        "ndvi_scenes": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2023_ndvi_scenes.csv",
+        "weather_daily": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2023_weather_daily.csv",
+        "events": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2023_events.csv"
+      },
+      "inputs": {
+        "boundary": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/boundary/field_boundaries.geojson",
+        "weather": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/weather/daily_weather.csv",
+        "cdl_table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2023_cdl.csv",
+        "sentinel_dir": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/satellite/sentinel/2023",
+        "gdd_normal_years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      }
+    },
+    {
+      "field_id": "osm-1360316095",
+      "grower": "ia-demo-grower",
+      "farm": "iowa-demo-farm",
+      "county": "Kossuth",
+      "state_fips": "19",
+      "area_acres": 154.94971536757984,
+      "year": 2024,
+      "crop": {
+        "crop_name": "Soybeans",
+        "crop_code": 5,
+        "pct": 97.92,
+        "pixel_count": 705,
+        "crop_source": "cdl",
+        "table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2024_cdl.csv",
+        "alternatives": [
+          {
+            "crop_name": "Soybeans",
+            "pct": 97.92
+          },
+          {
+            "crop_name": "Corn",
+            "pct": 0.83
+          }
+        ]
+      },
+      "weather": {
+        "season_start": "2024-04-01",
+        "season_end": "2024-10-31",
+        "days_present": 214,
+        "days_expected": 214,
+        "missing_days": 0,
+        "precip_total_mm": 825.6,
+        "gdd_total_c_day": 1696.0,
+        "hot_days": 1,
+        "extreme_heat_days": 0,
+        "heavy_rain_days": 7,
+        "frost_days": 9,
+        "hottest": {
+          "date": "2024-08-26",
+          "value": 32.27002
+        },
+        "coldest": {
+          "date": "2024-04-04",
+          "value": -2.9099731
+        },
+        "wettest": {
+          "date": "2024-06-22",
+          "value": 60.390015
+        },
+        "monthly_precip_mm": {
+          "Apr": 127.7,
+          "May": 213.6,
+          "Jun": 259.0,
+          "Jul": 105.9,
+          "Aug": 81.6,
+          "Sep": 13.5,
+          "Oct": 24.3
+        }
+      },
+      "ndvi": {
+        "usable_in_season": 6,
+        "in_season_scenes": 6,
+        "largest_gap_days": 65,
+        "largest_gap": {
+          "start": "2024-05-23",
+          "end": "2024-07-27",
+          "days": 65
+        },
+        "observations": [
+          {
+            "date": "2024-04-13",
+            "ndvi_mean": 0.087,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2024-05-23",
+            "ndvi_mean": 0.101,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2024-07-27",
+            "ndvi_mean": 0.629,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2024-08-31",
+            "ndvi_mean": 0.697,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2024-09-20",
+            "ndvi_mean": 0.278,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2024-10-10",
+            "ndvi_mean": 0.133,
+            "valid_fraction": 1.0
+          }
+        ],
+        "skipped": []
+      },
+      "events": [
+        {
+          "key": "wet_start",
+          "date": "2024-06-22",
+          "label": "heavy rain",
+          "short": "rain",
+          "panel": "precipitation",
+          "value": 60.390015,
+          "unit": "mm",
+          "detail": "60.4 mm on 22 Jun"
+        },
+        {
+          "key": "heat_peak",
+          "date": "2024-08-26",
+          "label": "peak heat",
+          "short": "heat",
+          "panel": "temperature",
+          "value": 32.27002,
+          "unit": "\u00b0C",
+          "detail": "Tmax 32.3 \u00b0C on 26 Aug"
+        },
+        {
+          "key": "freeze",
+          "date": "2024-10-16",
+          "label": "freeze",
+          "short": "freeze",
+          "panel": "temperature",
+          "value": -0.6199951,
+          "unit": "\u00b0C",
+          "detail": "Tmin -0.6 \u00b0C on 16 Oct"
+        }
+      ],
+      "captions": [
+        "Green-up: NDVI rose 0.10 \u2192 0.63 between 23 May and 27 Jul, with 403 mm of rain in the interval.",
+        "Midseason: peak NDVI 0.70 on 31 Aug; Tmax reached 32.3 \u00b0C on 26 Aug; 1 day \u226532 \u00b0C; NDVI then fell 0.42 to 0.28 by 20 Sep.",
+        "Finish: first freeze Tmin -0.6 \u00b0C on 16 Oct; GDD 1,696 \u00b0C-day, 5th-highest of 5 years; NDVI 0.13 at the last scene (10 Oct)."
+      ],
+      "output_png": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2024_soybeans_season_dashboard.png",
+      "sidecars": {
+        "ndvi_scenes": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2024_ndvi_scenes.csv",
+        "weather_daily": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2024_weather_daily.csv",
+        "events": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2024_events.csv"
+      },
+      "inputs": {
+        "boundary": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/boundary/field_boundaries.geojson",
+        "weather": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/weather/daily_weather.csv",
+        "cdl_table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2024_cdl.csv",
+        "sentinel_dir": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/satellite/sentinel/2024",
+        "gdd_normal_years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      }
+    },
+    {
+      "field_id": "osm-1360316095",
+      "grower": "ia-demo-grower",
+      "farm": "iowa-demo-farm",
+      "county": "Kossuth",
+      "state_fips": "19",
+      "area_acres": 154.94971536757984,
+      "year": 2025,
+      "crop": {
+        "crop_name": "Corn",
+        "crop_code": 1,
+        "pct": 95.28,
+        "pixel_count": 686,
+        "crop_source": "cdl",
+        "table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2025_cdl.csv",
+        "alternatives": [
+          {
+            "crop_name": "Corn",
+            "pct": 95.28
+          }
+        ]
+      },
+      "weather": {
+        "season_start": "2025-04-01",
+        "season_end": "2025-10-31",
+        "days_present": 214,
+        "days_expected": 214,
+        "missing_days": 0,
+        "precip_total_mm": 724.6,
+        "gdd_total_c_day": 1722.0,
+        "hot_days": 6,
+        "extreme_heat_days": 1,
+        "heavy_rain_days": 7,
+        "frost_days": 13,
+        "hottest": {
+          "date": "2025-06-21",
+          "value": 35.320007
+        },
+        "coldest": {
+          "date": "2025-04-08",
+          "value": -4.9000244
+        },
+        "wettest": {
+          "date": "2025-08-17",
+          "value": 41.190002
+        },
+        "monthly_precip_mm": {
+          "Apr": 82.8,
+          "May": 62.9,
+          "Jun": 168.7,
+          "Jul": 211.5,
+          "Aug": 119.9,
+          "Sep": 37.1,
+          "Oct": 41.7
+        }
+      },
+      "ndvi": {
+        "usable_in_season": 7,
+        "in_season_scenes": 7,
+        "largest_gap_days": 57,
+        "largest_gap": {
+          "start": "2025-07-02",
+          "end": "2025-08-28",
+          "days": 57
+        },
+        "observations": [
+          {
+            "date": "2025-04-08",
+            "ndvi_mean": 0.097,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2025-05-08",
+            "ndvi_mean": 0.095,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2025-06-22",
+            "ndvi_mean": 0.498,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2025-07-02",
+            "ndvi_mean": 0.604,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2025-08-28",
+            "ndvi_mean": 0.591,
+            "valid_fraction": 0.408
+          },
+          {
+            "date": "2025-09-25",
+            "ndvi_mean": 0.153,
+            "valid_fraction": 1.0
+          },
+          {
+            "date": "2025-10-10",
+            "ndvi_mean": 0.17,
+            "valid_fraction": 1.0
+          }
+        ],
+        "skipped": []
+      },
+      "events": [
+        {
+          "key": "heat_peak",
+          "date": "2025-06-21",
+          "label": "peak heat",
+          "short": "heat",
+          "panel": "temperature",
+          "value": 35.320007,
+          "unit": "\u00b0C",
+          "detail": "Tmax 35.3 \u00b0C on 21 Jun"
+        },
+        {
+          "key": "wet_start",
+          "date": "2025-07-05",
+          "label": "heavy rain",
+          "short": "rain",
+          "panel": "precipitation",
+          "value": 37.900024,
+          "unit": "mm",
+          "detail": "37.9 mm on 05 Jul"
+        },
+        {
+          "key": "freeze",
+          "date": "2025-10-23",
+          "label": "freeze",
+          "short": "freeze",
+          "panel": "temperature",
+          "value": -0.94000244,
+          "unit": "\u00b0C",
+          "detail": "Tmin -0.9 \u00b0C on 23 Oct"
+        }
+      ],
+      "captions": [
+        "Green-up: NDVI rose 0.09 \u2192 0.50 between 08 May and 22 Jun, with 171 mm of rain in the interval.",
+        "Midseason: peak NDVI 0.60 on 02 Jul; Tmax reached 35.3 \u00b0C on 21 Jun; 6 days \u226532 \u00b0C; NDVI then fell 0.44 to 0.15 by 25 Sep.",
+        "Finish: first freeze Tmin -0.9 \u00b0C on 23 Oct; GDD 1,722 \u00b0C-day, 4th-highest of 5 years; NDVI 0.17 at the last scene (10 Oct)."
+      ],
+      "output_png": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2025_corn_season_dashboard.png",
+      "sidecars": {
+        "ndvi_scenes": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2025_ndvi_scenes.csv",
+        "weather_daily": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2025_weather_daily.csv",
+        "events": "/home/coder/my-farm-advisor-skills/my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2025_events.csv"
+      },
+      "inputs": {
+        "boundary": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/boundary/field_boundaries.geojson",
+        "weather": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/weather/daily_weather.csv",
+        "cdl_table": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/derived/tables/iowa_2025_cdl.csv",
+        "sentinel_dir": "/home/coder/my-farm-advisor-runtime/data-pipeline/growers/ia-demo-grower/farms/iowa-demo-farm/fields/osm-1360316095/satellite/sentinel/2025",
+        "gdd_normal_years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      }
+    }
+  ]
+}

@@ -288,6 +288,15 @@ within-field, within-grower and cross-grower scales. A default run writes nine
 figures and five tables; the assembled write-up with embedded figures is
 [`REPORT.md`](eda/eda-field-comparison/REPORT.md).
 
+**Field-season storyline dashboard (Assignment 3).**
+[`eda/eda-field-season-dashboard/`](eda/eda-field-season-dashboard/README.md) is
+a runnable one-field workflow that aligns Sentinel-2 NDVI, NASA POWER daily
+weather and CDL crop-year data on one 1 April–31 October axis. The featured
+field-year is `osm-1360316095` · 2023 · Corn (Kossuth County, Iowa); the
+committed dashboard is
+[`examples/assignment-3/output/osm-1360316095_2023_corn_season_dashboard.png`](eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2023_corn_season_dashboard.png).
+The same command generated all five available years for the field.
+
 ## Typical Workflow
 
 ```mermaid

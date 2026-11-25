@@ -550,6 +550,13 @@ geneticist — gets both without us choosing their agent harness for them.
 | Weather | [`weather/INDEX.md`](my-farm-advisor/weather/INDEX.md) | NASA POWER weather and derived analysis |
 | Data pipeline | [`data-pipeline/README.md`](my-farm-advisor/data-pipeline/README.md) | Country-aware ingest, per-field rendering, runtime management |
 
+**Field-season storyline dashboard (Assignment 3).**
+[`eda/eda-field-season-dashboard/`](my-farm-advisor/eda/eda-field-season-dashboard/README.md)
+is a reusable one-field workflow for Sentinel-2 NDVI, NASA POWER daily weather
+and CDL crop-year data on one growing-season axis. The featured result is field
+`osm-1360316095` · 2023 · Corn in Kossuth County, Iowa:
+[`dashboard`](my-farm-advisor/eda/eda-field-season-dashboard/examples/assignment-3/output/osm-1360316095_2023_corn_season_dashboard.png).
+
 ### 🌱 My Farm Breeding Trial Management
 
 | Area | Examples of work |
